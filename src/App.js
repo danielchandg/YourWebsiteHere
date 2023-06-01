@@ -27,6 +27,8 @@ import { amber, yellow, cyan, indigo, lime, purple, teal, pink } from '@mui/mate
 
 export default function App() {
 
+  // localStorage.clear();
+
   const [brightnessMode, setBrightnessMode] = React.useState('light');
   const [colorTheme, setColorTheme] = React.useState('blue');
   const [myColors] = React.useState({
@@ -317,10 +319,26 @@ export default function App() {
     }
   }, [view, story, addM, currentProject]);
 
+  // React.useEffect(() => {
+  //   localStorage.removeItem('money_graph');
+  //   localStorage.removeItem('loc_graph');
+  //   localStorage.removeItem('project_graph');
+  //   localStorage.removeItem('paper_graph');
+  // })
+
   // Track day + hour
   React.useEffect(() => {
     let myInterval = setInterval(() => {
+      let donoed = false;
       if(time === 9){
+
+        // let money_graph = JSON.parse(localStorage.getItem('money_graph') || '[]');
+        // money_graph.push(Math.round(money));
+        // localStorage.setItem('money_graph', JSON.stringify(money_graph));
+        // let loc_graph = JSON.parse(localStorage.getItem('loc_graph') || '[]');
+        // loc_graph.push(Math.round(totalLOC));
+        // localStorage.setItem('loc_graph', JSON.stringify(loc_graph));
+
         if (day === 0 && hour === 2) {
           setOpenMessages(true);
           addM(`Welcome to Your Website Here! Get ready to dive into the exciting world of web development and manage your own website building company. Let's get started!`);
@@ -399,6 +417,7 @@ export default function App() {
           setSnackbarSuccessMsg(`Earned $${dono}!`);
           addM(`You received a donation of ${dono}!`);
           setMoney(money + dono);
+          donoed = true;
         }
 
         if(hour === 23){
@@ -410,6 +429,16 @@ export default function App() {
             no |= totalProjects === 2;
             if (!no) setCreateProject(true);
           }
+
+          // let project_graph = JSON.parse(localStorage.getItem('project_graph') || '[]');
+          // project_graph.push(totalProjects);
+          // localStorage.setItem('project_graph', JSON.stringify(project_graph));
+          // let paper_graph = JSON.parse(localStorage.getItem('paper_graph') || '[]');
+          // paper_graph.push(totalPapers);
+          // localStorage.setItem('paper_graph', JSON.stringify(paper_graph));
+          // let worker_graph = JSON.parse(localStorage.getItem('worker_graph') || '[]');
+          // worker_graph.push(numEmployees);
+          // localStorage.setItem('worker_graph', JSON.stringify(worker_graph));
         }
         else{
           if (starterProject > 1) {
@@ -448,11 +477,11 @@ export default function App() {
         p.backend[0] = newBackend;
         setCurrentProject(p);
       }
-      setMoney(money - totalCost / 10);
+      if (!donoed) setMoney(money - totalCost / 10);
     }, speed/10);
     return () => clearInterval(myInterval);
   }, [speed, time, hour, day, currentProject, createProject, numFrontendLOC, numBackendLOC, money, totalCost,
-    totalLOC, pHours, pDay, addM, numBackend, numFrontend, starterProject, story, totalPapers, totalProjects, view, globalTime, employees, improve, maxEmployees, projects.length]);
+    totalLOC, pHours, pDay, addM, numBackend, numFrontend, starterProject, story, totalPapers, totalProjects, totalLOC, view, globalTime, employees, improve, maxEmployees, projects.length]);
 
   // Update numEmployees
   React.useEffect(() => {
@@ -694,7 +723,7 @@ React.useEffect(() => {
   else {
     const frontend = (3 + Math.floor(Math.pow(day, 1.2)) + Math.floor(Math.random() * 8)) * 50;
     const backend = (3 + Math.floor(Math.pow(day, 1.2)) + Math.floor(Math.random() * 10)) * 50;
-    const money = Math.floor((10 + Math.floor(Math.pow(day, 1.2)) + Math.floor(Math.random() * 40))) * 100;
+    const money = Math.floor((10 + day * day + Math.floor(Math.random() * 40))) * 100;
     const project = {name: `Website ${number}`, icon: icon, iconColor: iconColor, frontend: [0,frontend], backend: [0,backend], money: money};
     setProjects([...projects, project]);
     setSpecialProjectTimer(specialProjectTimer - 1);
