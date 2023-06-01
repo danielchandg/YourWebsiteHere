@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, Collapse, Container, Divider, Icon, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Paper, Stack, Tooltip, Typography } from '@mui/material';
+import { Card, CardHeader, Collapse, Container, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PeopleIcon from '@mui/icons-material/People';
 import CodeIcon from '@mui/icons-material/Code';
@@ -185,7 +185,7 @@ export default function Home({ money, day, hour, numEmployees, maxEmployees, tot
         </Card>
 
         <Typography fontFamily='monospace' variant='h4'><strong>&nbsp;Current Project</strong></Typography>
-        <Card sx={{bgcolor: currentProject?.color || brightnessMode === 'dark' ? grey[800] : grey[50], width: 425, mb: 1}}>
+        <Card sx={{bgcolor: currentProject?.color || (brightnessMode === 'dark' ? grey[800] : grey[50]), width: 425, mb: 1}}>
           <CardHeader
             avatar={<IconButton>
                       <ProjectIcon icon={currentProject?.icon || 0} color={currentProject?.iconColor || 'blue'} />
@@ -202,7 +202,7 @@ export default function Home({ money, day, hour, numEmployees, maxEmployees, tot
                   <Tooltip title={`${Math.round(frontendProgress)}%`}>
                     <LinearProgress variant='determinate' value={frontendProgress} />
                   </Tooltip>
-                  <Tooltip title='LOC stands for Lines Of Code'>
+                  <Tooltip title='Total number of lines of code written'>
                     <Typography fontFamily='monospace'>{Math.round(currentProject?.frontend[0] || 0)} / {Math.round(currentProject?.frontend[1] || 0)} LOC completed</Typography>
                   </Tooltip>
                 </Stack>

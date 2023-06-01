@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Alert, AppBar, Avatar, Badge, Box, Button, Container, Fab, IconButton, Menu, MenuItem, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Alert, AppBar, Avatar, Badge, Box, Button, Container, IconButton, Menu, MenuItem, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WebIcon from '@mui/icons-material/Web';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,11 +11,11 @@ import Messages from './Messages';
 import useScrollBlock from './useScrollBlock';
 import { amber, yellow, cyan, indigo, lime, purple, teal, pink } from '@mui/material/colors';
 
-const starter_frontend = {name: 'Fiona', cost: 0, profit: 3, color: 'blue', frontend: true};
-const starter_backend = {name: 'Brandon', cost: 0, profit: 5, color: 'green'};
+// const starter_frontend = {name: 'Fiona', cost: 0, profit: 3, color: 'blue', frontend: true};
+// const starter_backend = {name: 'Brandon', cost: 0, profit: 5, color: 'green'};
 
-const starter_project1 = {name: 'First Website', icon: 0, iconColor: 'blue', frontend: [0,100], backend: [0,120], money: 800};
-const starter_project2 = {name: 'Second Website', icon: 1, iconColor: 'green', frontend: [0,60], backend: [0,75], money: 650};
+// const starter_project1 = {name: 'First Website', icon: 0, iconColor: 'blue', frontend: [0,100], backend: [0,120], money: 800};
+// const starter_project2 = {name: 'Second Website', icon: 1, iconColor: 'green', frontend: [0,60], backend: [0,75], money: 650};
 
 // const project7 = {name: 'Website 343', color: amber['A200'], icon: 0, iconColor: 'blue', frontend: [100,1000], backend: [200,2000], currentLOC: 5};
 // const project2 = {name: 'Google', color: yellow[500], icon: 1, iconColor: 'purple', frontend: [6,10], backend: [8,20], maxEmployees: 3};
@@ -48,10 +48,10 @@ export default function App() {
   React.useEffect(() => localStorage.setItem('story', story), [story]);
   const START = 16;
 
-  const [projectColors, setProjectColors] = React.useState([amber['A200'], yellow[500], cyan['A200'], indigo[100], lime['A400'], purple['A400'], teal['A200'], pink['A200']]);
+  const [projectColors] = React.useState([amber['A200'], yellow[500], cyan['A200'], indigo[100], lime['A400'], purple['A400'], teal['A200'], pink['A200']]);
 
   // speed = 1000 --> 1 second between hours
-  const [speed, setSpeed] = React.useState(400);
+  const [speed] = React.useState(400);
 
   const [view, setView] = React.useState('home');
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -78,7 +78,7 @@ export default function App() {
     if (currentProject) localStorage.setItem('currentProject', JSON.stringify(currentProject));
     else localStorage.setItem('currentProject', 'null');
   }, [currentProject]);
-  const [specialProjectTimer, setSpecialProjectTimer] = React.useState(5);
+  const [specialProjectTimer, setSpecialProjectTimer] = React.useState(4);
   const [projects, setProjects] = React.useState(JSON.parse(localStorage.getItem('projects') || '[]'));
   React.useEffect(() => localStorage.setItem('projects', JSON.stringify(projects)), [projects]);
   const [starterProject, setStarterProject] = React.useState(parseInt(localStorage.getItem('starterProject') || '0'));
@@ -120,7 +120,7 @@ export default function App() {
   const [numHireForms, setNumHireForms] = React.useState(0);
   const [specialEmployeeForms, setSpecialEmployeeForms] = React.useState([]);
   const [projectForms, setProjectForms] = React.useState([]);
-  const [employeeImprovementForms, setEmployeeImprovementForms] = React.useState([]);
+  const [employeeImprovementForms] = React.useState([]);
   const [specialProjects, setSpecialProjects] = React.useState([]);
 
   const [formTypeQueue, setFormTypeQueue] = React.useState('');
@@ -296,7 +296,7 @@ export default function App() {
         setStory(12);
       }
     }
-  }, [currentProject, projects, projectForms, specialEmployeeForms, time, hour, totalProjects, story]);
+  }, [currentProject, projects, projectForms, specialEmployeeForms, time, hour, totalProjects, story, addM]);
 
   const [pHours, setPHours] = React.useState([]);
   const [pDay, setPDay] = React.useState(0);
@@ -338,7 +338,7 @@ export default function App() {
           let perm = [];
           for (let i=0; i<employees.length; i++) perm.push(i);
           let currentIndex = perm.length, randomIndex;
-          while (currentIndex != 0) {
+          while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
             [perm[currentIndex], perm[randomIndex]] = [
@@ -370,7 +370,7 @@ export default function App() {
           let perm = [];
           for (let i=0; i<employees.length; i++) perm.push(i);
           let currentIndex = perm.length, randomIndex;
-          while (currentIndex != 0) {
+          while (currentIndex !== 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
             [perm[currentIndex], perm[randomIndex]] = [
@@ -395,9 +395,10 @@ export default function App() {
 
         if (maxEmployees >= 5 && Math.random() < 0.001) {
           setAddedForm(true);
-          const dono = 100000 * Math.floor(Math.random() * 10);
+          const dono = 100000 * Math.floor(Math.random() * 11);
           setSnackbarSuccessMsg(`Earned $${dono}!`);
           addM(`You received a donation of ${dono}!`);
+          setMoney(money + dono);
         }
 
         if(hour === 23){
@@ -415,7 +416,7 @@ export default function App() {
             if (pHours.includes(hour)) {
               setCreateProject(true);
             }
-            else if (!currentProject && projects.length == 0 && totalProjects >= 3 && pDay != day) {
+            else if (!currentProject && projects.length === 0 && totalProjects >= 3 && pDay !== day) {
               setPHours([...pHours, hour]);
               console.log(`Adding to phour: ${hour}`);
               setPDay(day);
@@ -450,7 +451,8 @@ export default function App() {
       setMoney(money - totalCost / 10);
     }, speed/10);
     return () => clearInterval(myInterval);
-  }, [speed, time, hour, day, currentProject, createProject, numFrontendLOC, numBackendLOC, money, totalCost, totalLOC, pHours, pDay, addM, numBackend, numFrontend, starterProject, story, totalPapers, totalProjects, view, globalTime]);
+  }, [speed, time, hour, day, currentProject, createProject, numFrontendLOC, numBackendLOC, money, totalCost,
+    totalLOC, pHours, pDay, addM, numBackend, numFrontend, starterProject, story, totalPapers, totalProjects, view, globalTime, employees, improve, maxEmployees, projects.length]);
 
   // Update numEmployees
   React.useEffect(() => {
@@ -641,14 +643,14 @@ export default function App() {
         if (Math.random() < 0.2 && specialProjectRate > 2) {
           p.push({name: company, specialProjectRate: true});
         }
-        else if (x < 2) p.push({name: company, maxEmployees: 3 + Math.floor(Math.random() * 3)});
+        else if (x < 2 || (maxEmployees < 20 && x < 4)) p.push({name: company, maxEmployees: 3 + Math.floor(Math.random() * 3)});
         else if (x === 2) p.push({name: company, currentLOC: 10 + Math.floor(Math.random() * 10)});
         else if (x === 3) p.push({name: company, futureLOC: 20 + Math.floor(Math.random() * 20)});
         else p.push({name: company, worker: {name: `${first[Math.floor(Math.random() * first.length)]} ${last[Math.floor(Math.random() * last.length)]}`}});
       });
       setSpecialProjects(p);
     }
-  }, [specialProjects]);
+  }, [specialProjects, specialProjectRate]);
 
 React.useEffect(() => {
   if (!createProject) {
@@ -678,8 +680,8 @@ React.useEffect(() => {
   const icon = Math.floor(Math.random() * 28);
   const iconColor = ['blue', 'purple', 'green', 'orange', 'red'][Math.floor(Math.random() * 5)];
   if (specialProjectTimer === 0) {
-    const frontend = (4 + day * day + Math.floor(Math.random() * 11)) * 100;
-    const backend = (4 + day * day + Math.floor(Math.random() * 16)) * 100;
+    const frontend = (4 + Math.floor(Math.pow(day, 1.3)) + Math.floor(Math.random() * 11)) * 100;
+    const backend = (4 + Math.floor(Math.pow(day, 1.3)) + Math.floor(Math.random() * 16)) * 100;
     let project = specialProjects[Math.floor(Math.random() * specialProjects.length)];
     project.color = color;
     project.icon = icon;
@@ -690,15 +692,15 @@ React.useEffect(() => {
     setSpecialProjectTimer(Math.floor(Math.random() * specialProjectRate) + 1);
   }
   else {
-    const frontend = (3 + day * day + Math.floor(Math.random() * 8)) * 50;
-    const backend = (3 + day * day + Math.floor(Math.random() * 10)) * 50;
-    const money = Math.floor((10 + day * day + Math.floor(Math.random() * 40))) * 100;
+    const frontend = (3 + Math.floor(Math.pow(day, 1.2)) + Math.floor(Math.random() * 8)) * 50;
+    const backend = (3 + Math.floor(Math.pow(day, 1.2)) + Math.floor(Math.random() * 10)) * 50;
+    const money = Math.floor((10 + Math.floor(Math.pow(day, 1.2)) + Math.floor(Math.random() * 40))) * 100;
     const project = {name: `Website ${number}`, icon: icon, iconColor: iconColor, frontend: [0,frontend], backend: [0,backend], money: money};
     setProjects([...projects, project]);
     setSpecialProjectTimer(specialProjectTimer - 1);
   }
   setCreateProject(false);
-}, [createProject, projects, MAX_PROJECTS, projectColors, specialProjectTimer, numFrontendLOC, numBackendLOC, specialProjects, totalCost, day, starterProject, specialProjectRate]);
+}, [createProject, projects, MAX_PROJECTS, projectColors, specialProjectTimer, numFrontendLOC, numBackendLOC, specialProjects, totalCost, day, starterProject, specialProjectRate, addM]);
 
   React.useEffect(() => {
     if(papers.length < MAX_PAPERS){
@@ -781,7 +783,7 @@ React.useEffect(() => {
       setPapers([...papers, app]);
       setNumHireForms(numHireForms - 1);
     }
-  }, [numHireForms, papers, MAX_PAPERS, formTypeQueue, employees, bonusLOC, allEmployeeFields, addedForm, snackbarSuccessMsg]);
+  }, [numHireForms, papers, MAX_PAPERS, formTypeQueue, employees, bonusLOC, allEmployeeFields, addedForm, snackbarSuccessMsg, createEmployeeFields]);
 
   // Add special hiring form if specialEmployeeForms is non-empty and can add papers
   React.useEffect(() => {
@@ -818,7 +820,7 @@ React.useEffect(() => {
       P.shift();
       setSpecialEmployeeForms(P);
     }
-  }, [numHireForms, papers, MAX_PAPERS, formTypeQueue, employees, bonusLOC, specialEmployeeForms, numFrontendLOC, numBackendLOC, snackbarSuccessMsg, addedForm, allEmployeeFields]);
+  }, [numHireForms, papers, MAX_PAPERS, formTypeQueue, employees, bonusLOC, specialEmployeeForms, numFrontendLOC, numBackendLOC, snackbarSuccessMsg, addedForm, allEmployeeFields, createEmployeeFields]);
 
   // Add project form if projectForms is non-empty and can add papers
   React.useEffect(() => {
@@ -828,8 +830,8 @@ React.useEffect(() => {
       const avatar = '0123456789'[Math.floor(Math.random() * 10)];
       const projectColor = projectColors[Math.floor(Math.random() * 8)];
       const icon = Math.floor(Math.random() * 28);
-      let frontend = (5 + day * day + Math.floor(Math.random() * 8)) * 100;
-      let backend = (5 + day * day + Math.floor(Math.random() * 12)) * 100;
+      let frontend = (5 + Math.floor(Math.pow(day, 1.3)) + Math.floor(Math.random() * 8)) * 100;
+      let backend = (5 + Math.floor(Math.pow(day, 1.3)) + Math.floor(Math.random() * 12)) * 100;
 
       let fields = createProjectFields();
       let project = projectForms[0];
@@ -853,7 +855,7 @@ React.useEffect(() => {
       P.shift();
       setProjectForms(P);
     }
-  }, [projectForms, papers, MAX_PAPERS, formTypeQueue, projectColors, numFrontendLOC, numBackendLOC, allProjectFields, addedForm, snackbarSuccessMsg, day]);
+  }, [projectForms, papers, MAX_PAPERS, formTypeQueue, projectColors, numFrontendLOC, numBackendLOC, allProjectFields, addedForm, snackbarSuccessMsg, day, createProjectFields]);
   
 
   const handleAddApplication = () => {

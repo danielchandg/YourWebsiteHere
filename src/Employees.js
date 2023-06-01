@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Button, Container, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Tooltip, Typography, paperClasses } from '@mui/material';
+import { Button, Container, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Tooltip, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -20,10 +20,10 @@ const colorConvert = {
 
 // Each employee needs:
 // level = 2 or 3, number, cost, profit
-const worker1 = {number: 1, cost: 10, profit: 5, color: 'blue', frontend: true};
-const worker2 = {number: 2, cost: 10, profit: 5, color: 'purple', level: 2};
-const worker3 = {number: 3, cost: 13, profit: 23, color: 'green', frontend: true};
-const worker4 = {name: 'I am special', cost: 14, profit: 24, color: 'orange', level: 2, frontend: true};
+// const worker1 = {number: 1, cost: 10, profit: 5, color: 'blue', frontend: true};
+// const worker2 = {number: 2, cost: 10, profit: 5, color: 'purple', level: 2};
+// const worker3 = {number: 3, cost: 13, profit: 23, color: 'green', frontend: true};
+// const worker4 = {name: 'I am special', cost: 14, profit: 24, color: 'orange', level: 2, frontend: true};
 
 export default function Employees({employees, setEmployees, numEmployees, maxEmployees,
   numFrontend, setNumFrontend, numBackend, setNumBackend, numFrontendLOC, setNumFrontendLOC, numBackendLOC, setNumBackendLOC, totalCost, setTotalCost,

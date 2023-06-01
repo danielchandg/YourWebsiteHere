@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Checkbox, Container, Divider, Fab, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, IconButton, Input, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Rating, Select, Slider, Tooltip, Typography, colors } from '@mui/material';
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Checkbox, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, IconButton, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Rating, Select, Slider, Tooltip, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { grey } from '@mui/material/colors';
 
@@ -45,8 +45,8 @@ export default function Form({ form, handleRemove, setRewardForm, totalPapers, s
   const avatar = form.avatar;
 
   const [errors, setErrors] = React.useState([]);
-  const [errorMsg, setErrorMsg] = React.useState({});
-  const [fields, setFields] = React.useState(form.fields);
+  const [errorMsg] = React.useState({});
+  const [fields] = React.useState(form.fields);
   const [state, setState] = React.useState({});
   const [iconHover, setIconHover] = React.useState(false);
   const [z, setZ] = React.useState(false);
