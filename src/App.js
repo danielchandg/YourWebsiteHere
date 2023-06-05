@@ -1078,9 +1078,9 @@ React.useEffect(() => {
         />
       }
 
-      <AppBar aria-label='console' position='fixed' color='secondary' sx={{ width: 450, top: 'auto', bottom: 0, right: 0, mr: 5, mb: 3 }}>
+      <AppBar aria-label='console' position='fixed' color='secondary' sx={{ width: 420, top: 'auto', bottom: 0, right: 0, mr: 3, mb: 3 }}>
         <Toolbar>
-          <Accordion expanded={openMessages} sx={{width: 430}}>
+          <Accordion expanded={openMessages} sx={{width: 420}}>
           <AccordionSummary onClick={() => setOpenMessages(!openMessages)} expandIcon={<ExpandMoreIcon />} >
             <Typography>Notifications</Typography>
             <Badge sx={{ml: 1}} badgeContent={messages.length} color='primary'>
