@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Accordion, AccordionSummary, Alert, AppBar, Avatar, Badge, Box, Button, Container, IconButton, Menu, MenuItem, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Alert, AppBar, Avatar, Badge, Box, Button, Container, IconButton, Menu, MenuItem, Slider, Snackbar, Stack, Switch, Toolbar, Tooltip, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import WebIcon from '@mui/icons-material/Web';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -53,7 +53,8 @@ export default function App() {
   const [projectColors] = React.useState([amber['A200'], yellow[500], cyan['A200'], indigo[100], lime['A400'], purple['A400'], teal['A200'], pink['A200']]);
 
   // speed = 1000 --> 1 second between hours
-  const [speed] = React.useState(400);
+  const [speed, setSpeed] = React.useState(400);
+  const [turbo, setTurbo] = React.useState(false);
 
   const [view, setView] = React.useState('home');
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -378,13 +379,13 @@ export default function App() {
               break;
             }
           }
-          setImprove(60 + Math.floor(Math.random() * 60));
+          setImprove((turbo ? 30 : 60) + Math.floor(Math.random() * 60));
         }
         else {
           setImprove(improve - 1);
         }
 
-        if (maxEmployees >= 5 && Math.random() < 0.004) {
+        if (maxEmployees >= 5 && Math.random() < (turbo ? 0.02 : 0.004)) {
           let perm = [];
           for (let i=0; i<employees.length; i++) perm.push(i);
           let currentIndex = perm.length, randomIndex;
@@ -411,9 +412,9 @@ export default function App() {
           }
         }
 
-        if (maxEmployees >= 5 && Math.random() < 0.001) {
+        if (maxEmployees >= 5 && Math.random() < (turbo ? 0.01 : 0.001)) {
           setAddedForm(true);
-          const dono = 100000 * Math.floor(Math.random() * 11);
+          const dono = 10000 * Math.floor(Math.random() * 11);
           setSnackbarSuccessMsg(`Earned $${dono}!`);
           addM(`You received a donation of ${dono}!`);
           setMoney(money + dono);
@@ -698,7 +699,7 @@ React.useEffect(() => {
     return;
   }
   if (starterProject === 1) {
-    const project = {name: 'Second Website part 1', color: projectColors[2], icon: 1, iconColor: 'orange', frontend: [0,85], backend: [0,120], project: {name: 'Second Website part 2', maxEmployees: 3}};
+    const project = {name: 'Second Website part 1', color: projectColors[2], icon: 1, iconColor: 'orange', frontend: [0,(turbo ? 60 : 85)], backend: [0,(turbo ? 100 : 120)], project: {name: 'Second Website part 2', maxEmployees: 3}};
     setProjects([...projects, project]);
     setStarterProject(2);
     setCreateProject(false);
@@ -865,7 +866,7 @@ React.useEffect(() => {
       let fields = createProjectFields();
       let project = projectForms[0];
       if (project.name === 'Second Website part 2') {
-        frontend = 90;
+        frontend = (turbo ? 60 : 90);
         backend = 100;
       }
       project.color = projectColor;
@@ -982,7 +983,37 @@ React.useEffect(() => {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem><strong>Hi</strong></MenuItem>
+            <MenuItem sx={{width: 200}}>
+              <Stack>
+                <Tooltip title='Speeds up the game.'>
+                  <Typography fontFamily='monospace'><strong>Speed</strong></Typography>
+                </Tooltip>
+                <Slider
+                  sx={{width: 160, ml: 1}}
+                  value={11 - speed/40}
+                  min={1}
+                  max={10}
+                  step={1}
+                  onChange={(e) => setSpeed(40 * (11 - e.target.value))}
+                  valueLabelDisplay='auto'
+                />
+              </Stack>
+            </MenuItem>
+            <MenuItem>
+              <Stack>
+                <Tooltip title='Increases rate of random events'>
+                  <Typography fontFamily='monospace'><strong>Turbo Mode</strong></Typography>
+                </Tooltip>
+                <Switch
+                  sx={{ml: -1}}
+                  value={turbo}
+                  onChange={(e) => {
+                    setTurbo(e.target.checked);
+                    setSpecialProjectRate(2);
+                  }}
+                />
+              </Stack>
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
